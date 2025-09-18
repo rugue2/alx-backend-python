@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Unit tests for utils functions"""
 import unittest
-from unittest.mock import patch, Mock
+from unittest.mock import patch, Mock, PropertyMock
 from parameterized import parameterized
-from utils import access_nested_map, get_json
+from utils import access_nested_map, get_json, memoize
 
 
 class TestAccessNestedMap(unittest.TestCase):
@@ -51,3 +51,37 @@ class TestGetJson(unittest.TestCase):
             
             # Assert the output of get_json equals test_payload
             self.assertEqual(result, test_payload)
+
+
+class TestMemoize(unittest.TestCase):
+    """Test case for memoization decorator"""
+    
+    def test_memoize(self):
+        """Test that when calling a_property twice, a_method is only called once"""
+        
+        class TestClass:
+            """Test class for memoization"""
+            
+            def a_method(self):
+                """Method to be memoized"""
+                return 42
+
+            @memoize
+            def a_property(self):
+                """Property that uses memoization decorator"""
+                return self.a_method()
+        
+        test_obj = TestClass()
+        
+        # Mock a_method
+        with patch.object(TestClass, 'a_method', return_value=42) as mock_method:
+            # Call a_property twice
+            first_call = test_obj.a_property
+            second_call = test_obj.a_property
+            
+            # Assert a_method was only called once
+            mock_method.assert_called_once()
+            
+            # Assert both calls return the expected result
+            self.assertEqual(first_call, 42)
+            self.assertEqual(second_call, 42)
