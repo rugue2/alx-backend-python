@@ -17,8 +17,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
 
+# Define the URL patterns
 urlpatterns = [
     path("admin/", admin.site.urls),
+    # Include the chat app URLs under the 'api' path
     path("api/", include("chats.urls")),
 ]

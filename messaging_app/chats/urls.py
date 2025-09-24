@@ -1,16 +1,13 @@
-from rest_framework.routers import DefaultRouter
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from .views import ConversationViewSet, MessageViewSet
 
-# Initialize the router
-router = routers.DefaultRouter()
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
 
-# Register viewsets with the router
+# Register the viewsets with the router
 router.register(r'conversations', ConversationViewSet, basename='conversation')
 router.register(r'messages', MessageViewSet, basename='message')
 
-# Define URL patterns
-urlpatterns = [
-    # Include the router URLs
-    path('', include(router.urls)),
-]
+# The API URLs are now determined automatically by the router.
+urlpatterns = router.urls
