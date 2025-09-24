@@ -42,6 +42,9 @@ def with_db_connection(func):
             conn.close()
     return wrapper
 
+<<<<<<< HEAD
+>>>>>>> 49d428595850d1d8342388cb6ca607833c52011b
+=======
 
 @with_db_connection
 def get_user_by_id(conn, user_id):
@@ -56,3 +59,4 @@ if __name__ == "__main__":
     print(user)
 
 >>>>>>> 49d428595850d1d8342388cb6ca607833c52011b
+>>>>>>> bd5569cb98de53092102092ceff59dea7816ca8c
