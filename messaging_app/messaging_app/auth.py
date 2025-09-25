@@ -1,0 +1,2 @@
+# chats/auth.py
+pass
